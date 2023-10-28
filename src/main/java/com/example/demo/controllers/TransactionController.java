@@ -4,6 +4,7 @@ import com.example.demo.models.GasolineTankEntity;
 import com.example.demo.models.TransactionDetailEntity;
 import com.example.demo.request.TransactionRequest;
 import com.example.demo.response.BaseResponse;
+import com.example.demo.response.TransactionResponse;
 import com.example.demo.services.GasolineTankService;
 import com.example.demo.services.TransactionDetailService;
 import java.util.Date;
@@ -25,9 +26,9 @@ public class TransactionController {
     private TransactionDetailService transactionDetailService;
 
     @PostMapping("/transaction")
-    public BaseResponse transaction(@RequestBody TransactionRequest transactionRequest) {
-        BaseResponse baseResponse = new BaseResponse();
-        baseResponse.setMessage("Ha habido un problema procesando la transacción");
+    public TransactionResponse transaction(@RequestBody TransactionRequest transactionRequest) {
+        TransactionResponse response = new TransactionResponse();
+        response.setMessage("Ha habido un problema procesando la transacción");
 
         Optional<GasolineTankEntity> gasolineTankOptional =
             gasolineTankService.findById(transactionRequest.getGasolineTankId());
@@ -47,15 +48,16 @@ public class TransactionController {
                 transactionDetail.setTransactionHour(new Date());
                 transactionDetailService.saveTransactionDetail(transactionDetail);
 
-                baseResponse.setSuccessful(true);
-                baseResponse.setMessage("Transacción realizada con éxito.");
+                response.setSuccessful(true);
+                response.setMessage("Transacción realizada con éxito.");
+                response.setPrice(gasolineTank.getGasolineType().getPrice());
             } else {
-                baseResponse.setMessage("No se cuenta con el nivel de gasolina que se desea vender.");
+                response.setMessage("No se cuenta con el nivel de gasolina que se desea vender.");
             }
         } else {
-            baseResponse.setMessage("No hemos encontrado el tanque de donde se está vendiendo la gasolina.");
+            response.setMessage("No hemos encontrado el tanque de donde se está vendiendo la gasolina.");
         }
 
-        return baseResponse;
+        return response;
     }
 }
