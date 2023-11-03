@@ -3,8 +3,8 @@ package com.example.demo.request;
 public class TransactionRequest {
 
     private Long gasolineTankId;
-    private double amount;
-    private String clientName;
+    private double gallons;
+    private String customerName;
     private String paymentType;
 
     public Long getGasolineTankId() {
@@ -15,20 +15,20 @@ public class TransactionRequest {
         this.gasolineTankId = gasolineTankId;
     }
 
-    public double getAmount() {
-        return amount;
+    public double getGallons() {
+        return gallons;
     }
 
-    public void setAmount(double amount) {
-        this.amount = amount;
+    public void setGallons(double gallons) {
+        this.gallons = gallons;
     }
 
-    public String getClientName() {
-        return clientName;
+    public String getCustomerName() {
+        return customerName;
     }
 
-    public void setClientName(String clientName) {
-        this.clientName = clientName;
+    public void setCustomerName(String customerName) {
+        this.customerName = customerName;
     }
 
     public String getPaymentType() {

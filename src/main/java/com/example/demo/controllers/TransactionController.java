@@ -3,7 +3,6 @@ package com.example.demo.controllers;
 import com.example.demo.models.GasolineTankEntity;
 import com.example.demo.models.TransactionDetailEntity;
 import com.example.demo.request.TransactionRequest;
-import com.example.demo.response.BaseResponse;
 import com.example.demo.response.TransactionResponse;
 import com.example.demo.services.GasolineTankService;
 import com.example.demo.services.TransactionDetailService;
@@ -35,14 +34,14 @@ public class TransactionController {
 
         if (gasolineTankOptional.isPresent()) {
             GasolineTankEntity gasolineTank = gasolineTankOptional.get();
-            if ((gasolineTank.getCurrentLevel() - transactionRequest.getAmount()) > 0) {
+            if ((gasolineTank.getCurrentLevel() - transactionRequest.getGallons()) > 0) {
                 gasolineTankService.updateCurrentLevel(
                     transactionRequest.getGasolineTankId(),
-                    gasolineTank.getCurrentLevel() - transactionRequest.getAmount()
+                    gasolineTank.getCurrentLevel() - transactionRequest.getGallons()
                 );
 
                 TransactionDetailEntity transactionDetail = new TransactionDetailEntity();
-                transactionDetail.setClientName(transactionRequest.getClientName());
+                transactionDetail.setClientName(transactionRequest.getCustomerName());
                 transactionDetail.setPaymentType(transactionRequest.getPaymentType());
                 transactionDetail.setTransactionDate(new Date());
                 transactionDetail.setTransactionHour(new Date());
